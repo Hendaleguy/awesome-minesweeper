@@ -15,17 +15,12 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject cellObject;
     
-    [SerializeField]
-    private GameObject[] cellObjectArray;
-
-    // private CellMap cellMap;
     private Dictionary<int, Cell> cellDictionary;
     private Cell currentCell;
     private Cell[] cells;
 
     private void InitializeGrid()
     {
-        cellObjectArray = new GameObject[width * height];
         cellDictionary = new Dictionary<int, Cell>();
         Vector3 cellSize = cellObject.GetComponent<MeshRenderer>().bounds.size;
         Debug.Log(cellSize);
@@ -37,10 +32,8 @@ public class Board : MonoBehaviour
             newCellObject.transform.Translate(xPos * cellSize.x, 0, zPos * cellSize.z, Space.World);
             Cell cell = newCellObject.GetComponent<Cell>();
             cell.PosInBoard = new Vector2Int(xPos, zPos);
-            // cellMap.PutCell(cellScript.PosInBoard, cellScript);
             cellDictionary[newCellObject.GetInstanceID()] = cell;
         }
-        // cellMap.BoardSize = new Vector2(cellSize.x * width, cellSize.z * height);
     }
 
     public void HandleClick(RaycastHit hit)
@@ -58,18 +51,17 @@ public class Board : MonoBehaviour
         currentCell.Click();
     }
 
-    public void HandleClickRelease(RaycastHit hit)
+    public void HandleClickRelease()
     {
-        currentCell.ClickRelease();
+        if (currentCell)
+        {
+            currentCell.ClickRelease();
+        }
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        // cellMap = GetComponent<CellMap>();
-        // cellMap.CellSize = cellObject.GetComponent<MeshRenderer>().bounds.size;
-        
-        
         InitializeGrid();
     }
 

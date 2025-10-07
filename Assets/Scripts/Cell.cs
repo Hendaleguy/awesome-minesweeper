@@ -35,7 +35,11 @@ public class Cell : MonoBehaviour
     public void ClickRelease()
     {
         DepressTile(false);
-        Debug.Log("Click released!");
+    }
+
+    public void AddMine()
+    {
+        _isMine = true;
     }
 
     private void DepressTile(bool isShrink = true)
@@ -59,10 +63,12 @@ public class Cell : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
+        _isMine = false;
+        _isRevealed = false;
+        
         _originalScale = transform.localScale;
         _originalSize = GetComponent<MeshRenderer>().localBounds.size;
         _originalPosition = transform.localPosition;
-        
     }
 
     // Update is called once per frame

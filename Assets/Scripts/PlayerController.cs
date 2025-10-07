@@ -34,47 +34,6 @@ public class PlayerController : MonoBehaviour
     private GameObject targetCellObject;
     private Cell targetCell;
     private Board gameBoard;
-    
-    // private void ClickDown()
-    // {
-    //     if (!Physics.Raycast(playerCamera.position, playerCamera.forward, out RaycastHit hit, clickRange))
-    //     {
-    //         return;
-    //     }
-    //     
-    //     Debug.Log("Got something");
-    //     
-    //     if (hit.collider.gameObject != targetCellObject)
-    //     {
-    //         Debug.Log("New object found: " + targetCellObject);
-    //         SetTargetCell(hit.collider.gameObject);
-    //     }
-    //         
-    //     targetCell.Click();
-    // }
-
-    // private void OnClickRelease()
-    // {
-    //     
-    // }
-    
-    // private void SetTargetCell(GameObject newTargetCellObject)
-    // {
-    //     if (targetCell)
-    //     {
-    //         targetCell.UnClick();
-    //     }
-    //     
-    //     if (!newTargetCellObject.CompareTag("Cell"))
-    //     {
-    //         Debug.Log("Not a cell");
-    //         targetCellObject = null;
-    //         targetCell = null;
-    //         return;
-    //     }
-    //     targetCellObject = newTargetCellObject;
-    //     targetCell = newTargetCellObject.GetComponent<Cell>();
-    // }
 
     private bool IsGrounded()
     {
@@ -115,11 +74,11 @@ public class PlayerController : MonoBehaviour
 
         UpdateMouseLook();
         
-        // if (_attackAction.IsPressed()) ClickDown();
+        if (_attackAction.IsPressed()) OnClickDown();
 
         if (_attackAction.WasReleasedThisFrame()) OnClickRelease();
 
-        if (_attackAction.WasPressedThisFrame()) OnClickDown();
+        // if (_attackAction.WasPressedThisFrame()) OnClickDown();
 
         if (_jumpAction.IsPressed()) HandleJump();
     }
@@ -141,12 +100,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        // GameObject targetObject = hit.collider.gameObject;
-        //
-        // if (targetObject.CompareTag("Cell"))
-        // {
-        //     targetObject.GetComponent<Cell>().Click();
-        // }
+        
         GameObject targetObject = hit.collider.gameObject;
 
         if (targetObject.CompareTag("Cell"))
@@ -157,16 +111,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnClickRelease()
     {
-        if (!Physics.Raycast(playerCamera.position, playerCamera.forward, out RaycastHit hit, clickRange))
+        if (!Physics.Raycast(playerCamera.position, playerCamera.forward, clickRange))
         {
             return;
         }
-        GameObject targetObject = hit.collider.gameObject;
-
-        if (targetObject.CompareTag("Cell"))
-        {
-            gameBoard.HandleClickRelease(hit);
-        }
+        
+        gameBoard.HandleClickRelease();
     }
     
 }
