@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _moveAction;
     private InputAction _lookAction;
     private InputAction _attackAction;
+    private InputAction _flagAction;
     private InputAction _jumpAction;
     
     private Rigidbody _playerBody;
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
         _lookAction = InputSystem.actions.FindAction("Look");
         _attackAction = InputSystem.actions.FindAction("Attack");
+        _flagAction = InputSystem.actions.FindAction("Flag");
         _jumpAction = InputSystem.actions.FindAction("Jump");
 
         _playerBody = GetComponent<Rigidbody>();
@@ -74,11 +76,12 @@ public class PlayerController : MonoBehaviour
 
         UpdateMouseLook();
         
+        // Click down and click release used for tile depression interaction
         if (_attackAction.IsPressed()) OnClickDown();
-
         if (_attackAction.WasReleasedThisFrame()) OnClickRelease();
 
-        // if (_attackAction.WasPressedThisFrame()) OnClickDown();
+        // Right click just needs the one
+        if (_flagAction.WasCompletedThisFrame()) OnRightClick();
 
         if (_jumpAction.IsPressed()) HandleJump();
     }
@@ -117,6 +120,16 @@ public class PlayerController : MonoBehaviour
         }
         
         gameBoard.HandleClickRelease();
+    }
+
+    private void OnRightClick()
+    {
+        if (!Physics.Raycast(playerCamera.position, playerCamera.forward, out RaycastHit hit, clickRange))
+        {
+            return;
+        }
+
+        gameBoard.HandleRightClick(hit);
     }
     
 }

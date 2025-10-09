@@ -15,13 +15,15 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject cellObject;
     
-    private Dictionary<int, Cell> cellDictionary;
+    private Dictionary<int, Cell> cellIDDictionary;
+    private Dictionary<Vector2Int, Cell> cellPosDictionary;
     private Cell currentCell;
-    private Cell[] cells;
 
     private void InitializeGrid()
     {
-        cellDictionary = new Dictionary<int, Cell>();
+        cellIDDictionary = new Dictionary<int, Cell>();
+        cellPosDictionary = new Dictionary<Vector2Int, Cell>();
+        
         Vector3 cellSize = cellObject.GetComponent<MeshRenderer>().bounds.size;
         Debug.Log(cellSize);
         for (int i = 0; i < width * height; i++)
@@ -30,17 +32,27 @@ public class Board : MonoBehaviour
             int xPos = i % width;
             int zPos = i / width;
             newCellObject.transform.Translate(xPos * cellSize.x, 0, zPos * cellSize.z, Space.World);
+            
             Cell cell = newCellObject.GetComponent<Cell>();
-            cell.PosInBoard = new Vector2Int(xPos, zPos);
-            cellDictionary[newCellObject.GetInstanceID()] = cell;
+            Vector2Int cellPos = new Vector2Int(xPos, zPos);
+            cell.PosInBoard = cellPos;
+            
+            cellIDDictionary[newCellObject.GetInstanceID()] = cell;
+            cellPosDictionary[cellPos] = cell;
         }
+    }
+
+    private Cell GetCellFromRaycastHit(RaycastHit hit)
+    {
+        int cellID = hit.collider.gameObject.GetInstanceID();
+        Cell targetCell = cellIDDictionary[cellID];
+
+        return targetCell;
     }
 
     public void HandleClick(RaycastHit hit)
     {
-        int cellID = hit.collider.gameObject.GetInstanceID();
-
-        Cell targetCell = cellDictionary[cellID];
+        Cell targetCell = GetCellFromRaycastHit(hit);
 
         if (currentCell)
         {
@@ -51,12 +63,22 @@ public class Board : MonoBehaviour
         currentCell.Click();
     }
 
+    /**
+     * Actual click activation logic happens on release
+     */
     public void HandleClickRelease()
     {
         if (currentCell)
         {
             currentCell.ClickRelease();
         }
+    }
+    
+    public void HandleRightClick(RaycastHit hit)
+    {
+        Cell targetCell = GetCellFromRaycastHit(hit);
+
+        targetCell.HandleFlag();
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created

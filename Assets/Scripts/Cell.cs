@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    private bool _isMine;
-    private bool _isRevealed;
-    private int _numMineNeighbors;
+    private Vector3 originalScale;
+    private Vector3 originalSize;
+    private Vector3 originalPosition;
 
-    private Vector3 _originalScale;
-    private Vector3 _originalSize;
-    private Vector3 _originalPosition;
+    private MineTextures mineTextures;
+    private Renderer _renderer;
     
     public Vector2Int PosInBoard { get; set; }
+    public bool IsMine { get; set; }
+    public bool IsRevealed { get; set; }
+    public bool IsFlagged { get; set; }
+    public int NumMineNeighbors { get; set; }
 
     /**
      * For when the click is held down, not released yet
@@ -37,9 +40,20 @@ public class Cell : MonoBehaviour
         DepressTile(false);
     }
 
+    public void HandleFlag()
+    {
+        if (IsRevealed)
+        {
+            return;
+        }
+
+        _renderer.material.mainTexture = IsFlagged ? mineTextures.blank : mineTextures.flag;
+        IsFlagged = !IsFlagged;
+    }
+
     public void AddMine()
     {
-        _isMine = true;
+        IsMine = true;
     }
 
     private void DepressTile(bool isShrink = true)
@@ -49,13 +63,13 @@ public class Cell : MonoBehaviour
         if (isShrink)
         {
             transform.localScale = new Vector3
-                (_originalScale.x, _originalScale.y, _originalScale.z * depressFactor);
-            transform.Translate(0, -(_originalSize.z * depressFactor) / 2, 0, Space.World);
+                (originalScale.x, originalScale.y, originalScale.z * depressFactor);
+            transform.Translate(0, -(originalSize.z * depressFactor) / 2, 0, Space.World);
         }
         else
         {
-            transform.localScale = _originalScale;
-            transform.localPosition = _originalPosition;
+            transform.localScale = originalScale;
+            transform.localPosition = originalPosition;
         }
         
     }
@@ -63,12 +77,16 @@ public class Cell : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        _isMine = false;
-        _isRevealed = false;
+        IsMine = false;
+        IsRevealed = false;
+        IsFlagged = false;
         
-        _originalScale = transform.localScale;
-        _originalSize = GetComponent<MeshRenderer>().localBounds.size;
-        _originalPosition = transform.localPosition;
+        originalScale = transform.localScale;
+        originalSize = GetComponent<MeshRenderer>().localBounds.size;
+        originalPosition = transform.localPosition;
+
+        mineTextures = GetComponent<MineTextures>();
+        _renderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame

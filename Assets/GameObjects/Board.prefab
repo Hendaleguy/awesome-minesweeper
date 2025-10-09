@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 155537916568192030}
   - component: {fileID: 1291252199035012459}
-  - component: {fileID: 2597287200749474194}
   m_Layer: 0
   m_Name: Board
   m_TagString: Board
@@ -49,16 +48,3 @@ MonoBehaviour:
   height: 16
   numMines: 0
   cellObject: {fileID: 6386771910171046527, guid: 4e0b4f3c32327ce4c97acd63dee0164f, type: 3}
-  cellObjectArray: []
---- !u!114 &2597287200749474194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3545563304070736031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e18c52c72ead7f4b8b6df68ec2285d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

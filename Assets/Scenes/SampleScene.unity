@@ -737,8 +737,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Board
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2597287200749474194, guid: b9c2dc8c58ac9fd46816bbfc9e1edc99, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
