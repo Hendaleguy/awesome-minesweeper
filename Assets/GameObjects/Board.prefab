@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 155537916568192030}
   - component: {fileID: 1291252199035012459}
+  - component: {fileID: 6540458068531021640}
+  - component: {fileID: 1522241000998148443}
   m_Layer: 0
   m_Name: Board
   m_TagString: Board
@@ -48,3 +50,40 @@ MonoBehaviour:
   height: 16
   numMines: 0
   cellObject: {fileID: 6386771910171046527, guid: 4e0b4f3c32327ce4c97acd63dee0164f, type: 3}
+--- !u!114 &6540458068531021640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3545563304070736031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80fe9279f10930499a58d70e9b17c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1522241000998148443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3545563304070736031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31240b7ecea15224da728e11dd350292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MineTextures
+  textures:
+  - {fileID: 2800000, guid: bbcc60340b1d40b4b815e79843724aba, type: 3}
+  - {fileID: 2800000, guid: c3767fec4df55614f89e98d7071e25b6, type: 3}
+  - {fileID: 2800000, guid: 0c1ff5ef3ee4fa649a4ef01c0fb281f6, type: 3}
+  - {fileID: 2800000, guid: 2846bd9b9b688064aa4f41039cbb3c03, type: 3}
+  - {fileID: 2800000, guid: cd5eaa54c78abb74ebc0aee34d3eaebd, type: 3}
+  - {fileID: 2800000, guid: 5814cc974afb48c4687a243c00cdb071, type: 3}
+  - {fileID: 2800000, guid: c25f219e2fc122f41b79a0db2ce56704, type: 3}
+  - {fileID: 2800000, guid: d48dd37b5be4abe43940d80b83128580, type: 3}
+  - {fileID: 2800000, guid: 2dcf5313583a3404184420bee1b9a679, type: 3}
+  - {fileID: 2800000, guid: 7bc33a316f4957a458ad98d2c23bff56, type: 3}
+  - {fileID: 2800000, guid: c7c7914619d167c4f9175e13fa0928f2, type: 3}
+  - {fileID: 2800000, guid: 960011d11afa46544a41d56b7568668f, type: 3}

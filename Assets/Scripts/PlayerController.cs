@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -70,10 +71,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Vector2 moveVector = _moveAction.ReadValue<Vector2>() * moveSpeed;
-        Vector3 forceVector = (transform.forward * moveVector.y + transform.right * moveVector.x);
-        _playerBody.AddForce(forceVector, ForceMode.Force);
-
         UpdateMouseLook();
         
         // Click down and click release used for tile depression interaction
@@ -82,7 +79,14 @@ public class PlayerController : MonoBehaviour
 
         // Right click just needs the one
         if (_flagAction.WasCompletedThisFrame()) OnRightClick();
+    }
 
+    private void FixedUpdate()
+    {
+        Vector2 moveVector = _moveAction.ReadValue<Vector2>() * moveSpeed;
+        Vector3 forceVector = (transform.forward * moveVector.y + transform.right * moveVector.x);
+        _playerBody.AddForce(forceVector, ForceMode.Force);
+        
         if (_jumpAction.IsPressed()) HandleJump();
     }
 
