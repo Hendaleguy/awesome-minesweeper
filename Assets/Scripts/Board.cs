@@ -141,10 +141,37 @@ public class Board : MonoBehaviour
         if (currentCell)
         {
             currentCell.UnClick();
+            HandleNeighborUnClicks(currentCell.PosInBoard);
         }
 
         currentCell = targetCell;
         currentCell.Click();
+
+        if (targetCell.IsRevealed)
+        {
+            HandleNeighborClicks(targetCell.PosInBoard);
+        }
+    }
+
+    /**
+     * For clicking on revealed cells and depressing its neighbors
+     */
+    private void HandleNeighborClicks(Vector2Int pos)
+    {
+        IEnumerable<Cell> neighborCells = GetNeighborsOfPos(pos).Select(p => cellPosDictionary[p]);
+        foreach (Cell cell in neighborCells)
+        {
+            cell.Click();
+        }
+    }
+
+    private void HandleNeighborUnClicks(Vector2Int pos)
+    {
+        IEnumerable<Cell> neighborCells = GetNeighborsOfPos(pos).Select(p => cellPosDictionary[p]);
+        foreach (Cell cell in neighborCells)
+        {
+            cell.UnClick();
+        }
     }
 
     /**
@@ -156,6 +183,16 @@ public class Board : MonoBehaviour
             return;
         
         currentCell.UnClick();
+        if (currentCell.IsRevealed)
+        {
+            HandleNeighborUnClicks(currentCell.PosInBoard);
+        }
+
+        if (currentCell.IsFlagged)
+        {
+            return;
+        }
+        
         PropagateReveal(currentCell.PosInBoard);
     }
 
@@ -171,13 +208,16 @@ public class Board : MonoBehaviour
             cell.Reveal();
 
             // TODO: double check that losing mechanism is taken into account here
-            if (cell.NumMineNeighbors != 0)
+            if (cell.NumMineNeighbors != GetNeighborsOfPos(cell.PosInBoard).Count(p => cellPosDictionary[p].IsFlagged))
                 continue;
 
             IEnumerable<Vector2Int> eligibleNeighbors = GetNeighborsOfPos(result);
             foreach (Vector2Int neighborPos in eligibleNeighbors)
             {
-                if (!cellPosDictionary[neighborPos].IsRevealed && !cellPosQueue.Contains(neighborPos))
+                Cell neighborCell = cellPosDictionary[neighborPos];
+                if (!neighborCell.IsRevealed &&
+                    !neighborCell.IsFlagged &&
+                    !cellPosQueue.Contains(neighborPos))
                     cellPosQueue.Enqueue(neighborPos);
             }
         }

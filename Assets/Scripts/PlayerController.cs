@@ -71,14 +71,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        UpdateMouseLook();
-        
         // Click down and click release used for tile depression interaction
         if (_attackAction.IsPressed()) OnClickDown();
         if (_attackAction.WasReleasedThisFrame()) OnClickRelease();
 
         // Right click just needs the one
         if (_flagAction.WasCompletedThisFrame()) OnRightClick();
+    }
+
+    private void LateUpdate()
+    {
+        UpdateMouseLook();
     }
 
     private void FixedUpdate()

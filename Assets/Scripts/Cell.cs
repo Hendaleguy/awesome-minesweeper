@@ -20,6 +20,10 @@ public class Cell : MonoBehaviour
      */
     public void Click()
     {
+        if (IsRevealed)
+        {
+            return;
+        }
         DepressTile();
     }
     
@@ -28,6 +32,10 @@ public class Cell : MonoBehaviour
      */
     public void UnClick()
     {
+        if (IsRevealed)
+        {
+            return;
+        }
         DepressTile(false);
     }
 
@@ -52,6 +60,11 @@ public class Cell : MonoBehaviour
 
     public void Reveal()
     {
+        if (IsRevealed)
+        {
+            return;
+        }
+        
         if (IsMine)
         {
             mineTextureManager.SetMineTexture();
@@ -60,6 +73,8 @@ public class Cell : MonoBehaviour
         {
             mineTextureManager.SetNumberTexture(NumMineNeighbors);
         }
+        
+        DepressTile();
         
         IsRevealed = true;
     }

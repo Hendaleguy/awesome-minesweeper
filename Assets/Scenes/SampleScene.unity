@@ -180,7 +180,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 90
+  field of view: 120
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -609,10 +609,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 1883234322}
   playerCamera: {fileID: 330585546}
-  moveSpeed: 500
+  moveSpeed: 200
   lookSpeed: 1
   jumpForce: 20
-  clickRange: 100
+  clickRange: 20
 --- !u!54 &586299248
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -621,7 +621,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586299242}
   serializedVersion: 5
-  m_Mass: 30
+  m_Mass: 5
   m_LinearDamping: 1
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
